@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -51,6 +52,13 @@ public class ApiExceptionHandlingMiddleware
                 .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
 
             problemDetails.Extensions.Add("errors", errors);
+        }
+        else if (exception is KeyNotFoundException keyNotFoundException)
+        {
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+            problemDetails.Status = StatusCodes.Status404NotFound;
+            problemDetails.Title = "Not Found";
+            problemDetails.Detail = keyNotFoundException.Message;
         }
         else
         {
