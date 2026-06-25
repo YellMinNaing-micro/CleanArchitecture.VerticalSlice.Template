@@ -203,4 +203,11 @@ dotnet run --project src/CleanArch.WebApi
 API စတင်ပွင့်လာပါက browser တွင် interactive **Scalar Documentation UI** ပွင့်လာပါလိမ့်မည်-
 *   👉 **`http://localhost:5076/scalar/v1`** (သို့မဟုတ် `https://localhost:7013/scalar/v1`)
 
-၎င်း UI တွင် JSON request payload များကို စမ်းသပ်ထည့်သွင်းပြီး endpoints များကို တိုက်ရိုက်စမ်းသပ်နိုင်သည်။ (ဥပမာ- FluentValidation အလုပ်လုပ်ပုံကို စမ်းသပ်ရန် Name ကွက်လပ်ချန်ထားပြီး Price ကို `<= 0` ထားကာ Product သစ်ဆောက်ကြည့်ပြီး 400 Bad Request error response ကို စစ်ဆေးနိုင်သည်)။
+၎င်း UI တွင် JSON request payload များကို စမ်းသပ်ထည့်သွင်းပြီး endpoints များကို တိုက်ရိုက်စမ်းသပ်နိုင်သည်။
+
+### စမ်းသပ်နိုင်သည့် Endpoint နမူနာများ-
+- **`GET /api/products`** - Product အားလုံးကို list ပြပေးသည်။
+- **`GET /api/products/{id}`** - သက်ဆိုင်ရာ Product ၏ အသေးစိတ်အချက်အလက်များကို ပြပေးသည်။
+- **`POST /api/products`** - Product အသစ်တစ်ခု ဆောက်ပေးသည် (`Name` နှင့် `Price` ကို စစ်ဆေးပေးသည်)။
+- **`PUT /api/products/{id}`** - လက်ရှိ Product ကို အချက်အလက်အသစ်ဖြင့် ပြင်ဆင်ပေးသည် (ID တူညီမှု၊ `Name` နှင့် `Price` ကို စစ်ဆေးပေးသည်)။
+- **`DELETE /api/products/{id}`** - database ထဲမှ product ကို ဖျက်ပေးသည်။
