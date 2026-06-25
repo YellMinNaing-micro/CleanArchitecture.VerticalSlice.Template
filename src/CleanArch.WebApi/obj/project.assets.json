@@ -275,6 +275,22 @@
           }
         }
       },
+      "Scalar.AspNetCore/2.16.5": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "SourceGear.sqlite3/3.50.4.5": {
         "type": "package",
         "compile": {
@@ -832,6 +848,25 @@
         "microsoft.openapi.nuspec"
       ]
     },
+    "Scalar.AspNetCore/2.16.5": {
+      "sha512": "194DwaZqe9Cd4nJPdY0c7/3ldLhxtgiMMAlWsgGdKuDLvGgKh7Poozd12nowxFS3ytKYzMcyMPjCIWww5n0hDA==",
+      "type": "package",
+      "path": "scalar.aspnetcore/2.16.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.png",
+        "lib/net10.0/Scalar.AspNetCore.dll",
+        "lib/net10.0/Scalar.AspNetCore.xml",
+        "lib/net8.0/Scalar.AspNetCore.dll",
+        "lib/net8.0/Scalar.AspNetCore.xml",
+        "lib/net9.0/Scalar.AspNetCore.dll",
+        "lib/net9.0/Scalar.AspNetCore.xml",
+        "scalar.aspnetcore.2.16.5.nupkg.sha512",
+        "scalar.aspnetcore.nuspec"
+      ]
+    },
     "SourceGear.sqlite3/3.50.4.5": {
       "sha512": "UtnipXhJYZKQOQIfpws/msLK7IRhMplE1CZCaZLIQXRnGD474QVpO/J9nMlQQY8NZueGz1aidjoxDRnrC1NT3Q==",
       "type": "package",
@@ -964,7 +999,8 @@
     "net10.0": [
       "CleanArch.Application >= 1.0.0",
       "CleanArch.Infrastructure >= 1.0.0",
-      "Microsoft.AspNetCore.OpenApi >= 10.0.9"
+      "Microsoft.AspNetCore.OpenApi >= 10.0.9",
+      "Scalar.AspNetCore >= 2.16.5"
     ]
   },
   "packageFolders": {
@@ -1029,6 +1065,10 @@
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[10.0.9, )"
+          },
+          "Scalar.AspNetCore": {
+            "target": "Package",
+            "version": "[2.16.5, )"
           }
         },
         "imports": [
