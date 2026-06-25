@@ -86,3 +86,5 @@ C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.WebApi\bin\Debug\net10.0\runt
 C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.WebApi\bin\Debug\net10.0\runtimes\iossimulator-arm64\native\e_sqlite3.a
 C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.WebApi\bin\Debug\net10.0\runtimes\iossimulator-x64\native\e_sqlite3.a
 C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.WebApi\bin\Debug\net10.0\runtimes\iossimulator-x86\native\e_sqlite3.a
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.WebApi\bin\Debug\net10.0\Scalar.AspNetCore.dll
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.WebApi\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
