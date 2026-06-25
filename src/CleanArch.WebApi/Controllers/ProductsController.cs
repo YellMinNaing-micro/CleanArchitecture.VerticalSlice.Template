@@ -32,7 +32,7 @@ public class ProductsController : ApiControllerBase
     [EndpointDescription("Retrieves details of a specific product using its unique ID.")]
     public async Task<ActionResult<ProductDto>> GetById(int id)
     {
-        var product = await Mediator.Send(new GetProductByIdQuery(id));
+        ProductDto? product = await Mediator.Send(new GetProductByIdQuery(id));
 
         if (product == null)
         {
