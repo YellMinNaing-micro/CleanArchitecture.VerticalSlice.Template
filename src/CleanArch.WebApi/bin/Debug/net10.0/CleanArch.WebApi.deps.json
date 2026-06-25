@@ -10,7 +10,8 @@
         "dependencies": {
           "CleanArch.Application": "1.0.0",
           "CleanArch.Infrastructure": "1.0.0",
-          "Microsoft.AspNetCore.OpenApi": "10.0.9"
+          "Microsoft.AspNetCore.OpenApi": "10.0.9",
+          "Scalar.AspNetCore": "2.16.5"
         },
         "runtime": {
           "CleanArch.WebApi.dll": {}
@@ -183,6 +184,14 @@
           "lib/net8.0/Microsoft.OpenApi.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.0.0.0"
+          }
+        }
+      },
+      "Scalar.AspNetCore/2.16.5": {
+        "runtime": {
+          "lib/net10.0/Scalar.AspNetCore.dll": {
+            "assemblyVersion": "2.16.5.0",
+            "fileVersion": "2.16.5.0"
           }
         }
       },
@@ -542,6 +551,13 @@
       "sha512": "sha512-GGYLfzV/G/ct80OZ45JxnWP7NvMX1BCugn/lX7TH5o0lcVaviavsLMTxmFV2AybXWjbi3h6FF1vgZiTK6PXndw==",
       "path": "microsoft.openapi/2.0.0",
       "hashPath": "microsoft.openapi.2.0.0.nupkg.sha512"
+    },
+    "Scalar.AspNetCore/2.16.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-194DwaZqe9Cd4nJPdY0c7/3ldLhxtgiMMAlWsgGdKuDLvGgKh7Poozd12nowxFS3ytKYzMcyMPjCIWww5n0hDA==",
+      "path": "scalar.aspnetcore/2.16.5",
+      "hashPath": "scalar.aspnetcore.2.16.5.nupkg.sha512"
     },
     "SourceGear.sqlite3/3.50.4.5": {
       "type": "package",
