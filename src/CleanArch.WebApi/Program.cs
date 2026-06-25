@@ -22,6 +22,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+    app.MapGet("/", () => Results.Redirect("/scalar/v1"));
     
     // Initialise and seed database
     using (var scope = app.Services.CreateScope())
