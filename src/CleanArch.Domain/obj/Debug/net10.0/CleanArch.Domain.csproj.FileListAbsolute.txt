@@ -1,0 +1,12 @@
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\bin\Debug\net10.0\CleanArch.Domain.deps.json
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\bin\Debug\net10.0\CleanArch.Domain.dll
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\bin\Debug\net10.0\CleanArch.Domain.pdb
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\obj\Debug\net10.0\CleanArch.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\obj\Debug\net10.0\CleanArch.Domain.AssemblyInfoInputs.cache
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\obj\Debug\net10.0\CleanArch.Domain.AssemblyInfo.cs
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\obj\Debug\net10.0\CleanArch.Domain.csproj.CoreCompileInputs.cache
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\obj\Debug\net10.0\CleanArch.Domain.sourcelink.json
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\obj\Debug\net10.0\CleanArch.Domain.dll
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\obj\Debug\net10.0\refint\CleanArch.Domain.dll
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\obj\Debug\net10.0\CleanArch.Domain.pdb
+C:\repos\CleanArchTemplate\CleanArch\src\CleanArch.Domain\obj\Debug\net10.0\ref\CleanArch.Domain.dll
