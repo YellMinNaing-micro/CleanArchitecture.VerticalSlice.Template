@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OVMB8MiGvpw=",
+  "dgSpecHash": "0lQAp92hEN8=",
   "success": true,
   "projectFilePath": "C:\\repos\\CleanArchTemplate\\CleanArch\\src\\CleanArch.WebApi\\CleanArch.WebApi.csproj",
   "expectedPackageFiles": [
@@ -22,6 +22,7 @@
     "C:\\Users\\yellm\\.nuget\\packages\\microsoft.identitymodel.logging\\8.14.0\\microsoft.identitymodel.logging.8.14.0.nupkg.sha512",
     "C:\\Users\\yellm\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.14.0\\microsoft.identitymodel.tokens.8.14.0.nupkg.sha512",
     "C:\\Users\\yellm\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
+    "C:\\Users\\yellm\\.nuget\\packages\\scalar.aspnetcore\\2.16.5\\scalar.aspnetcore.2.16.5.nupkg.sha512",
     "C:\\Users\\yellm\\.nuget\\packages\\sourcegear.sqlite3\\3.50.4.5\\sourcegear.sqlite3.3.50.4.5.nupkg.sha512",
     "C:\\Users\\yellm\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\3.0.3\\sqlitepclraw.bundle_e_sqlite3.3.0.3.nupkg.sha512",
     "C:\\Users\\yellm\\.nuget\\packages\\sqlitepclraw.config.e_sqlite3\\3.0.3\\sqlitepclraw.config.e_sqlite3.3.0.3.nupkg.sha512",
