@@ -1,0 +1,26 @@
+## Build outputs
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+
+## Visual Studio cache / user files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## JetBrains Rider / VS Code
+.idea/
+.vscode/
+
+## SQLite database files (which we use for local dev)
+*.db
+*.db-shm
+*.db-wal
+
+## OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
