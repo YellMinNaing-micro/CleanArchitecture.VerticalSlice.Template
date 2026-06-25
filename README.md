@@ -1,91 +1,207 @@
-# .NET Clean Architecture with Vertical Slice Template
+# 🚀 Modern .NET Web API: Clean Architecture & Vertical Slice Template
 
 [မြန်မာဘာသာဖြင့် ဖတ်ရှုရန် (Read in Myanmar)](README.my.md)
 
-This repository contains a modern web API template built using **ASP.NET Core** and structured according to **Clean Architecture** principles, combined with a **Vertical Slice (Feature-based)** organization inside the core application layer.
+This repository contains an enterprise-ready, zero-configuration Web API template built using **ASP.NET Core (.NET 10)**. It is structured around the principles of **Clean Architecture** for clear layer boundaries, combined with **Vertical Slice Architecture (Feature Folders)** inside the core application layer to maintain high cohesion and ease of change.
 
 ---
 
-## 🏗️ Architecture Overview
+## 🏗️ Architecture Design & Philosophy
 
-The project combines **Clean Architecture** (to separate concerns across independent horizontal projects) and **Vertical Slice Architecture** (grouping business logic by use cases inside the Application layer).
+This template uses a hybrid architectural approach designed to solve the common issues of large software projects:
+1. **Clean Architecture (Horizontal Project Boundaries)**: Separates concern into distinct layers (Domain, Application, Infrastructure, WebApi) to keep the core business rules independent of databases, UI frameworks, and external tools.
+2. **Vertical Slice / Feature Folders (Vertical Organization)**: Within the Application layer, logic is grouped by **Features** (e.g., `Products`, `Orders`) instead of technical categories. This ensures all classes required for a single use case (Commands, Queries, DTOs, and Validators) live together in the same folder.
 
 ```mermaid
 graph TD
-    WebApi[CleanArch.WebApi] --> Infrastructure[CleanArch.Infrastructure]
-    WebApi --> Application[CleanArch.Application]
+    %% Project Layers %%
+    WebApi[CleanArch.WebApi<br>Presentation Layer] --> Infrastructure[CleanArch.Infrastructure<br>Infrastructure Layer]
+    WebApi --> Application[CleanArch.Application<br>Core Business Logic]
     Infrastructure --> Application
-    Application --> Domain[CleanArch.Domain]
+    Application --> Domain[CleanArch.Domain<br>Enterprise Domain Layer]
+
+    style Domain fill:#f9f,stroke:#333,stroke-width:2px
+    style Application fill:#bbf,stroke:#333,stroke-width:2px
+    style Infrastructure fill:#fbb,stroke:#333,stroke-width:2px
+    style WebApi fill:#bfb,stroke:#333,stroke-width:2px
 ```
 
-### Project Layers
-1. **`CleanArch.Domain` (Core Domain)**
-   - No external dependencies (pure C#).
-   - Contains Enterprise Entities, Value Objects, Domain Exceptions, and core base classes like [BaseEntity](src/CleanArch.Domain/Common/BaseEntity.cs).
-2. **`CleanArch.Application` (Business Logic)**
-   - Holds application-specific logic, interfaces, CQRS use cases, and DTOs.
-   - Organized by **Features / Vertical Slices** (e.g. `CreateProduct`, `GetProducts`) where the Command, Validator, and Handler reside in the same folder.
-   - Implements automated request validation using a MediatR Pipeline Behavior.
-3. **`CleanArch.Infrastructure` (Data & External Services)**
-   - Implements repositories and db contexts defined in the Application layer.
-   - Utilizes Entity Framework Core with **SQLite** for zero-configuration local database persistence.
-   - Handles auto-creation and seeding of dummy test database on startup in Development mode.
-4. **`CleanArch.WebApi` (Presentation)**
-   - Exposes HTTP REST endpoints via Controllers.
-   - Features custom global exception middleware mapping validation and system errors into RFC 7807 Problem Details.
-   - Configures native OpenAPI generation and **Scalar API Reference** UI.
+---
+
+## 📂 Detailed Folder Structure
+
+Here is the complete project tree highlighting where files live and how they are organized:
+
+```text
+CleanArch/
+├── CleanArch.slnx                              # Modern XML-based Solution file
+├── .gitignore                                  # Git exclusion rules for .NET, VS, and SQLite
+├── README.md                                   # English documentation (Default)
+├── README.my.md                                # Myanmar documentation
+└── src/
+    ├── CleanArch.Domain/                       # Domain Layer (Pure C#, No external dependencies)
+    │   ├── Common/
+    │   │   └── BaseEntity.cs                   # Base abstract class with Id & Audit columns
+    │   └── Entities/
+    │       └── Product.cs                      # Product domain entity
+    │
+    ├── CleanArch.Application/                  # Application Layer (Core business rules)
+    │   ├── Common/
+    │   │   ├── Behaviors/
+    │   │   │   └── ValidationBehavior.cs       # MediatR validation pipeline interceptor
+    │   │   └── Interfaces/
+    │   │       └── IProductRepository.cs       # Database access contracts
+    │   ├── Features/
+    │   │   └── Products/                       # Product aggregate vertical slices
+    │   │       ├── Commands/
+    │   │       │   └── CreateProduct/
+    │   │       │       ├── CreateProductCommand.cs
+    │   │       │       └── CreateProductCommandValidator.cs
+    │   │       └── Queries/
+    │   │           ├── GetProductById/
+    │   │           │   └── GetProductByIdQuery.cs
+    │   │           └── GetProducts/
+    │   │               ├── GetProductsQuery.cs
+    │   │               └── ProductDto.cs
+    │   └── DependencyInjection.cs               # Registering MediatR & FluentValidation
+    │
+    ├── CleanArch.Infrastructure/               # Infrastructure Layer (External tools & Persistence)
+    │   ├── Persistence/
+    │   │   ├── Repositories/
+    │   │   │   └── ProductRepository.cs        # EF Core repository implementation
+    │   │   ├── ApplicationDbContext.cs         # Entity Framework database context
+    │   │   └── ApplicationDbContextInitializer.cs  # SQLite database creator & dummy data seeder
+    │   └── DependencyInjection.cs               # Registering DbContext and repositories
+    │
+    └── CleanArch.WebApi/                       # Presentation Layer (API Host & Routes)
+        ├── Controllers/
+        │   ├── ApiControllerBase.cs            # Base controller injecting MediatR ISender
+        │   └── ProductsController.cs           # HTTP REST endpoints for products
+        ├── Middleware/
+        │   └── ApiExceptionHandlingMiddleware.cs # Global Exception filter mapping errors to RFC 7807
+        ├── Properties/
+        │   └── launchSettings.json             # Profiles configuring ports and autostart page
+        ├── appsettings.json                    # Configuration (Connection strings, Logging)
+        └── Program.cs                          # Application entry point & service wiring
+```
 
 ---
 
-## 🛠️ Technologies & Packages Used
+## 🔄 Use Case Execution Flow
 
-- **Framework:** .NET 10.0
-- **Database ORM:** Entity Framework Core 10
-- **Database Provider:** SQLite (`Microsoft.EntityFrameworkCore.Sqlite`)
-- **CQRS Pattern:** MediatR (`MediatR`)
-- **Validation:** FluentValidation (`FluentValidation.DependencyInjectionExtensions`)
-- **API Documentation UI:** Scalar (`Scalar.AspNetCore`)
+When a client hits an API endpoint, the request flows through the clean boundaries using the Mediator pattern:
+
+```text
+ [ HTTP POST /api/products ]
+            │
+            ▼
+┌───────────────────────┐
+│  ProductsController   │  <-- Endpoint receives JSON payload
+└───────────┬───────────┘
+            │  (Sends CreateProductCommand via MediatR)
+            ▼
+┌───────────────────────┐
+│   ValidationBehavior  │  <-- Pipeline Interceptor checks FluentValidation rules.
+└───────────┬───────────┘      Throws ValidationException if rules fail.
+            │  (Valid request proceeds)
+            ▼
+┌───────────────────────┐
+│   CreateProductCmd    │
+│        Handler        │  <-- Executes logic, maps DTO to Domain Entity
+└───────────┬───────────┘
+            │  (Calls IProductRepository.AddAsync)
+            ▼
+┌───────────────────────┐
+│   ProductRepository   │  <-- Infrastructure implements SQL operations via EF Core
+└───────────┬───────────┘
+            │
+            ▼
+┌───────────────────────┐
+│  SQLite Local DB      │  <-- Entity is saved to SQLite disk file (CleanArch.db)
+└───────────────────────┘
+```
 
 ---
 
-## 💻 Frontend Client Integration (`.client`)
+## 🛠️ Core Technologies & Packages Used
 
-If you want to build a Full-stack application, you can add a frontend client project (such as **Angular**, **React**, or **Vue**) directly into the solution. 
-
-We recommend adding the client project under a folder named `CleanArch.Client` or simply `src/CleanArch.Client` (often suffixed with `.client`).
-- **Development Setup:** Configure a proxy in your frontend dev-server (e.g., `vite.config.ts` or `proxy.conf.json`) to forward API requests from the client port (e.g., `http://localhost:5173`) to the backend API port (`http://localhost:5076/api`).
-- **Production Setup:** You can configure the WebApi to serve static files from the compiled client output directory (`dist/` or `build/`), or deploy them as separate decoupled services.
+- **Runtime:** .NET 10.0
+- **Database Context (ORM):** Entity Framework Core 10
+- **Database Engine:** SQLite (`Microsoft.EntityFrameworkCore.Sqlite`)
+- **CQRS Pattern Orchestrator:** MediatR (`MediatR`)
+- **Model Validation:** FluentValidation (`FluentValidation.DependencyInjectionExtensions`)
+- **API Documentation & Testing UI:** Scalar (`Scalar.AspNetCore` with Native OpenAPI Document Generation)
 
 ---
 
-## 🚀 How to Run the Application
+## 💡 How-To Guides
 
-### 1. Prerequisites
-- Ensure you have **.NET 10 SDK** installed on your machine.
+### 1. How to Add a New Feature (e.g., `Order`)
+To add a new database-backed aggregate in this codebase, follow these steps in order:
+1. **Domain:** Add `Order` entity inheriting from `BaseEntity` under `CleanArch.Domain/Entities/`.
+2. **Application:**
+   - Define `IOrderRepository` under `CleanArch.Application/Common/Interfaces/`.
+   - Create a folder `CleanArch.Application/Features/Orders/Commands/CreateOrder/`.
+   - Write `CreateOrderCommand`, `CreateOrderCommandValidator`, and `CreateOrderCommandHandler`.
+3. **Infrastructure:**
+   - Add a `DbSet<Order> Orders` to `ApplicationDbContext`.
+   - Implement `OrderRepository` in `CleanArch.Infrastructure/Persistence/Repositories/`.
+   - Register the repository in `CleanArch.Infrastructure/DependencyInjection.cs`:
+     ```csharp
+     services.AddScoped<IOrderRepository, OrderRepository>();
+     ```
+4. **WebApi:**
+   - Create `OrdersController.cs` in `CleanArch.WebApi/Controllers/` inheriting from `ApiControllerBase`.
+   - Add endpoint actions sending commands/queries to MediatR.
 
-### 2. Run via Command Line
-Run the WebApi project directly from the repository root:
+### 2. How to Switch from SQLite to SQL Server
+For production, you can easily change the database provider in the Infrastructure layer:
+1. Install the NuGet package `Microsoft.EntityFrameworkCore.SqlServer` in `CleanArch.Infrastructure.csproj`.
+2. Update the connection string in `CleanArch.WebApi/appsettings.json`:
+   ```json
+   "ConnectionStrings": {
+     "DefaultConnection": "Server=YOUR_SERVER;Database=CleanArchDb;Trusted_Connection=True;TrustServerCertificate=True;"
+   }
+   ```
+3. Update `CleanArch.Infrastructure/DependencyInjection.cs` to use SQL Server:
+   ```csharp
+   services.AddDbContext<ApplicationDbContext>(options =>
+       options.UseSqlServer(connectionString));
+   ```
+
+### 3. How to Integrate a Frontend Project (`.client`)
+You can integrate an Angular, React, Vue, or Svelte client directly inside the solution directory:
+1. Run Vite or Angular CLI in the root directory to create the client folder:
+   ```bash
+   npx create-vite@latest src/CleanArch.Client --template react-ts
+   ```
+2. Configure proxy settings in the frontend dev-server (e.g., `vite.config.ts`) to forward API requests:
+   ```typescript
+   server: {
+     proxy: {
+       '/api': {
+         target: 'http://localhost:5076',
+         changeOrigin: true,
+         secure: false
+       }
+     }
+   }
+   ```
+3. In Visual Studio, you can configure both projects to run simultaneously using **Multiple Startup Projects** (WebApi + Client).
+
+---
+
+## 🚀 Getting Started
+
+### 1. Running the API
+From the root directory of the project, run:
 ```bash
 dotnet run --project src/CleanArch.WebApi
 ```
+Or in **Visual Studio**, right-click `CleanArch.WebApi` -> **Set as Startup Project**, and press **F5**.
 
-### 3. Run via Visual Studio
-1. Right-click the **`CleanArch.WebApi`** project in the Solution Explorer.
-2. Select **"Set as Startup Project"**.
-3. Press **`F5`** or click the green **Play** button.
-
----
-
-## 🔍 Testing the Endpoints
-
-Once the application starts, it will automatically:
-1. Create the SQLite local database file (`CleanArch.db`) at the root of the WebApi project.
-2. Seed the database with initial products.
-3. Open your default web browser to the interactive **Scalar API documentation UI** page:
-
+### 2. Testing Endpoints in Scalar UI
+Once launched, the browser will open to the interactive **Scalar Documentation UI**:
 *   👉 **`http://localhost:5076/scalar/v1`** (or `https://localhost:7013/scalar/v1`)
 
-### Sample endpoints to test:
-- **`GET /api/products`** - Get the list of all products.
-- **`GET /api/products/{id}`** - Retrieve a single product's details.
-- **`POST /api/products`** - Create a new product (validates that `Name` is not empty and `Price` is greater than 0).
+You can inspect the JSON request payloads, invoke routes, and verify error outputs (such as trying to create a product with an empty name or price set to `<= 0` to trigger FluentValidation).
