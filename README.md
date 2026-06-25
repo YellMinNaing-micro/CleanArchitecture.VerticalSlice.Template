@@ -204,4 +204,11 @@ Or in **Visual Studio**, right-click `CleanArch.WebApi` -> **Set as Startup Proj
 Once launched, the browser will open to the interactive **Scalar Documentation UI**:
 *   👉 **`http://localhost:5076/scalar/v1`** (or `https://localhost:7013/scalar/v1`)
 
-You can inspect the JSON request payloads, invoke routes, and verify error outputs (such as trying to create a product with an empty name or price set to `<= 0` to trigger FluentValidation).
+You can inspect the JSON request payloads, invoke routes, and verify error outputs.
+
+### Sample endpoints to test:
+- **`GET /api/products`** - Get the list of all products.
+- **`GET /api/products/{id}`** - Retrieve a single product's details.
+- **`POST /api/products`** - Create a new product (validates `Name` and `Price`).
+- **`PUT /api/products/{id}`** - Update an existing product (validates matching IDs, `Name` and `Price`).
+- **`DELETE /api/products/{id}`** - Delete a product from the database.
