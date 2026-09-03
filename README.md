@@ -83,6 +83,11 @@ CleanArch/
         │   └── launchSettings.json             # Profiles configuring ports and autostart page
         ├── appsettings.json                    # Configuration (Connection strings, Logging)
         └── Program.cs                          # Application entry point & service wiring
+└── tests/
+    └── CleanArch.UnitTests/                    # Unit Tests (xUnit, FluentAssertions, NSubstitute)
+        ├── Domain/                             # Domain entity unit tests
+        ├── Application/                        # Command, query, validator, and pipeline behavior tests
+        └── WebApi/                             # Controller & middleware unit tests
 ```
 
 ---
@@ -212,3 +217,13 @@ You can inspect the JSON request payloads, invoke routes, and verify error outpu
 - **`POST /api/products`** - Create a new product (validates `Name` and `Price`).
 - **`PUT /api/products/{id}`** - Update an existing product (validates matching IDs, `Name` and `Price`).
 - **`DELETE /api/products/{id}`** - Delete a product from the database.
+
+### 3. Running Unit Tests
+Execute the automated test suite with .NET CLI:
+```bash
+dotnet test
+```
+Or run with test coverage reporting:
+```bash
+dotnet test --collect:"XPlat Code Coverage"
+```
