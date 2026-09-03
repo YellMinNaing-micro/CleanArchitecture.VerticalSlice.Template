@@ -5,4 +5,7 @@
     <Project Path="src/CleanArch.Infrastructure/CleanArch.Infrastructure.csproj" />
     <Project Path="src/CleanArch.WebApi/CleanArch.WebApi.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CleanArch.UnitTests/CleanArch.UnitTests.csproj" />
+  </Folder>
 </Solution>
