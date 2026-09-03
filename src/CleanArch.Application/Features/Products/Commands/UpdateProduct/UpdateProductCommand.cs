@@ -54,7 +54,6 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
         entity.Description = request.Description;
         entity.Price = request.Price;
         entity.Sku = request.Sku;
-        entity.LastModified = System.DateTime.UtcNow;
 
         await _productRepository.UpdateAsync(entity, cancellationToken);
     }
