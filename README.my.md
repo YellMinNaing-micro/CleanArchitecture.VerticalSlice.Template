@@ -142,6 +142,7 @@ Client ဆီမှ ဝင်လာသော HTTP Request သည် Mediator Pat
 - **CQRS Pattern Orchestrator:** MediatR (`MediatR`)
 - **Model Validation:** FluentValidation (`FluentValidation.DependencyInjectionExtensions`)
 - **API Documentation & Testing UI:** Scalar (`Scalar.AspNetCore` နှင့် Native OpenAPI Document Generation)
+- **Health Checks & Monitoring:** ASP.NET Core Diagnostics နှင့် EF Core DbContext Check (`Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore`)
 
 ---
 
@@ -222,6 +223,7 @@ API စတင်ပွင့်လာပါက browser တွင် interactive 
 - **`POST /api/products`** - Product အသစ်တစ်ခု ဆောက်ပေးသည် (`Name` နှင့် `Price` ကို စစ်ဆေးပေးသည်)။
 - **`PUT /api/products/{id}`** - လက်ရှိ Product ကို အချက်အလက်အသစ်ဖြင့် ပြင်ဆင်ပေးသည် (ID တူညီမှု၊ `Name` နှင့် `Price` ကို စစ်ဆေးပေးသည်)။
 - **`DELETE /api/products/{id}`** - database ထဲမှ product ကို ဖျက်ပေးသည်။
+- **`GET /health`** - API status နှင့် Database ချိတ်ဆက်မှု အခြေအနေကို JSON format ဖြင့် စစ်ဆေးပေးသည်။
 
 ### ၃။ Unit Tests များ စမ်းသပ် Run ရန်
 Automated test suite အားလုံးကို .NET CLI ဖြင့် အောက်ပါအတိုင်း run နိုင်သည်-
