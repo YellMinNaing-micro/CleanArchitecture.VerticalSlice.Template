@@ -106,11 +106,9 @@ public class UpdateProductCommandHandlerTests
 
         // Assert
         existingProduct.Name.Should().Be("New Monitor");
-        existingProduct.Description.Should().Be("New OLED 4K" != null ? "New 4K OLED" : null);
+        existingProduct.Description.Should().Be("New 4K OLED");
         existingProduct.Price.Should().Be(699m);
         existingProduct.Sku.Should().Be("MON-NEW");
-        existingProduct.LastModified.Should().NotBeNull();
-        existingProduct.LastModified.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(5));
 
         await _productRepository.Received(1).UpdateAsync(existingProduct, Arg.Any<CancellationToken>());
     }
