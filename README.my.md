@@ -50,7 +50,8 @@ CleanArch/
     │   │   ├── Behaviors/
     │   │   │   └── ValidationBehavior.cs       # MediatR validation pipeline interceptor
     │   │   └── Interfaces/
-    │   │       └── IProductRepository.cs       # database access contract interface
+    │   │       ├── IProductRepository.cs       # database access contract interface
+    │   │       └── IUser.cs                    # Auditing အတွက် current user abstraction
     │   ├── Features/
     │   │   └── Products/                       # Product features နှင့်ပတ်သက်သော vertical slices
     │   │       ├── Commands/
@@ -67,11 +68,13 @@ CleanArch/
     │
     ├── CleanArch.Infrastructure/               # Infrastructure Layer (ပြင်ပ Tools နှင့် Persistence)
     │   ├── Persistence/
+    │   │   ├── Interceptors/
+    │   │   │   └── AuditableEntityInterceptor.cs # Audit fields များ auto ဖြည့်ပေးမည့် SaveChangesInterceptor
     │   │   ├── Repositories/
     │   │   │   └── ProductRepository.cs        # EF Core သုံးပြီး ရေးထားသော database repo implementation
     │   │   ├── ApplicationDbContext.cs         # Entity Framework db context
     │   │   └── ApplicationDbContextInitializer.cs  # local development database Auto-Seed ပြုလုပ်ပေးသည့် class
-    │   └── DependencyInjection.cs               # DbContext နှင့် repositories များကို register လုပ်ခြင်း
+    │   └── DependencyInjection.cs               # DbContext, Interceptors နှင့် repositories များကို register လုပ်ခြင်း
     │
     └── CleanArch.WebApi/                       # Presentation Layer (API Host & Host configuration)
         ├── Controllers/
@@ -79,6 +82,8 @@ CleanArch/
         │   └── ProductsController.cs           # Product REST endpoints controllers
         ├── Middleware/
         │   └── ApiExceptionHandlingMiddleware.cs # Error များကို RFC 7807 problem details အဖြစ်ပြောင်းပေးသော middleware
+        ├── Services/
+        │   └── CurrentUser.cs                  # HttpContext မှတစ်ဆင့် User claim ရယူပေးမည့် service
         ├── Properties/
         │   └── launchSettings.json             # port များနှင့် browser autostart စာမျက်နှာကို သတ်မှတ်ခြင်း
         ├── appsettings.json                    # database connections နှင့် logs setup configurations
@@ -87,6 +92,7 @@ CleanArch/
     └── CleanArch.UnitTests/                    # Unit Tests ပရောဂျက် (xUnit, FluentAssertions, NSubstitute)
         ├── Domain/                             # Domain entity စမ်းသပ်ချက်များ
         ├── Application/                        # Command, query, validator နှင့် pipeline behavior စမ်းသပ်ချက်များ
+        ├── Infrastructure/                     # EF Core interceptor နှင့် persistence စမ်းသပ်ချက်များ
         └── WebApi/                             # Controller နှင့် middleware စမ်းသပ်ချက်များ
 ```
 
