@@ -50,7 +50,8 @@ CleanArch/
     │   │   ├── Behaviors/
     │   │   │   └── ValidationBehavior.cs       # MediatR validation pipeline interceptor
     │   │   └── Interfaces/
-    │   │       └── IProductRepository.cs       # Database access contracts
+    │   │       ├── IProductRepository.cs       # Database access contracts
+    │   │       └── IUser.cs                    # Current user abstraction for auditing
     │   ├── Features/
     │   │   └── Products/                       # Product aggregate vertical slices
     │   │       ├── Commands/
@@ -67,11 +68,13 @@ CleanArch/
     │
     ├── CleanArch.Infrastructure/               # Infrastructure Layer (External tools & Persistence)
     │   ├── Persistence/
+    │   │   ├── Interceptors/
+    │   │   │   └── AuditableEntityInterceptor.cs # EF Core SaveChangesInterceptor for auto-auditing
     │   │   ├── Repositories/
     │   │   │   └── ProductRepository.cs        # EF Core repository implementation
     │   │   ├── ApplicationDbContext.cs         # Entity Framework database context
     │   │   └── ApplicationDbContextInitializer.cs  # SQLite database creator & dummy data seeder
-    │   └── DependencyInjection.cs               # Registering DbContext and repositories
+    │   └── DependencyInjection.cs               # Registering DbContext, interceptors, and repositories
     │
     └── CleanArch.WebApi/                       # Presentation Layer (API Host & Routes)
         ├── Controllers/
@@ -79,6 +82,8 @@ CleanArch/
         │   └── ProductsController.cs           # HTTP REST endpoints for products
         ├── Middleware/
         │   └── ApiExceptionHandlingMiddleware.cs # Global Exception filter mapping errors to RFC 7807
+        ├── Services/
+        │   └── CurrentUser.cs                  # HttpContext-based IUser implementation
         ├── Properties/
         │   └── launchSettings.json             # Profiles configuring ports and autostart page
         ├── appsettings.json                    # Configuration (Connection strings, Logging)
@@ -87,6 +92,7 @@ CleanArch/
     └── CleanArch.UnitTests/                    # Unit Tests (xUnit, FluentAssertions, NSubstitute)
         ├── Domain/                             # Domain entity unit tests
         ├── Application/                        # Command, query, validator, and pipeline behavior tests
+        ├── Infrastructure/                     # EF Core interceptor and persistence tests
         └── WebApi/                             # Controller & middleware unit tests
 ```
 
