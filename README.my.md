@@ -83,6 +83,11 @@ CleanArch/
         │   └── launchSettings.json             # port များနှင့် browser autostart စာမျက်နှာကို သတ်မှတ်ခြင်း
         ├── appsettings.json                    # database connections နှင့် logs setup configurations
         └── Program.cs                          # project စတင်မောင်းနှင်ရာ ဝင်ပေါက် (Entry point)
+└── tests/
+    └── CleanArch.UnitTests/                    # Unit Tests ပရောဂျက် (xUnit, FluentAssertions, NSubstitute)
+        ├── Domain/                             # Domain entity စမ်းသပ်ချက်များ
+        ├── Application/                        # Command, query, validator နှင့် pipeline behavior စမ်းသပ်ချက်များ
+        └── WebApi/                             # Controller နှင့် middleware စမ်းသပ်ချက်များ
 ```
 
 ---
@@ -211,3 +216,13 @@ API စတင်ပွင့်လာပါက browser တွင် interactive 
 - **`POST /api/products`** - Product အသစ်တစ်ခု ဆောက်ပေးသည် (`Name` နှင့် `Price` ကို စစ်ဆေးပေးသည်)။
 - **`PUT /api/products/{id}`** - လက်ရှိ Product ကို အချက်အလက်အသစ်ဖြင့် ပြင်ဆင်ပေးသည် (ID တူညီမှု၊ `Name` နှင့် `Price` ကို စစ်ဆေးပေးသည်)။
 - **`DELETE /api/products/{id}`** - database ထဲမှ product ကို ဖျက်ပေးသည်။
+
+### ၃။ Unit Tests များ စမ်းသပ် Run ရန်
+Automated test suite အားလုံးကို .NET CLI ဖြင့် အောက်ပါအတိုင်း run နိုင်သည်-
+```bash
+dotnet test
+```
+သို့မဟုတ် code coverage အစီရင်ခံချက်နှင့်အတူ run ရန်-
+```bash
+dotnet test --collect:"XPlat Code Coverage"
+```
