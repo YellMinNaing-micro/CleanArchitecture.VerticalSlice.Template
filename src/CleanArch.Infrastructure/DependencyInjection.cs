@@ -26,6 +26,9 @@ public static class DependencyInjection
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ApplicationDbContextInitializer>();
 
+        services.AddHealthChecks()
+            .AddDbContextCheck<ApplicationDbContext>(name: "database");
+
         return services;
     }
 }
