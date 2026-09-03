@@ -142,6 +142,7 @@ When a client hits an API endpoint, the request flows through the clean boundari
 - **CQRS Pattern Orchestrator:** MediatR (`MediatR`)
 - **Model Validation:** FluentValidation (`FluentValidation.DependencyInjectionExtensions`)
 - **API Documentation & Testing UI:** Scalar (`Scalar.AspNetCore` with Native OpenAPI Document Generation)
+- **Health Checks & Monitoring:** ASP.NET Core Diagnostics with EF Core DbContext Check (`Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore`)
 
 ---
 
@@ -223,6 +224,7 @@ You can inspect the JSON request payloads, invoke routes, and verify error outpu
 - **`POST /api/products`** - Create a new product (validates `Name` and `Price`).
 - **`PUT /api/products/{id}`** - Update an existing product (validates matching IDs, `Name` and `Price`).
 - **`DELETE /api/products/{id}`** - Delete a product from the database.
+- **`GET /health`** - Health check endpoint returning overall API and database connectivity status as JSON.
 
 ### 3. Running Unit Tests
 Execute the automated test suite with .NET CLI:
