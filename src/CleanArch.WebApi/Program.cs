@@ -1,12 +1,16 @@
 using CleanArch.Application;
+using CleanArch.Application.Common.Interfaces;
 using CleanArch.Infrastructure;
 using CleanArch.WebApi.Middleware;
+using CleanArch.WebApi.Services;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUser, CurrentUser>();
 
 // Register Clean Architecture layers
 builder.Services.AddApplicationServices();
