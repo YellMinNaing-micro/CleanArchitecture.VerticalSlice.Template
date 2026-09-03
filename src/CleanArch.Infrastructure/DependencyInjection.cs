@@ -1,5 +1,6 @@
 using CleanArch.Application.Common.Interfaces;
 using CleanArch.Infrastructure.Persistence;
+using CleanArch.Infrastructure.Persistence.Interceptors;
 using CleanArch.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,8 +15,13 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("DefaultConnection") 
             ?? "Data Source=CleanArch.db";
 
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite(connectionString));
+        services.AddScoped<AuditableEntityInterceptor>();
+
+        services.AddDbContext<ApplicationDbContext>((sp, options) =>
+        {
+            options.UseSqlite(connectionString);
+            options.AddInterceptors(sp.GetRequiredService<AuditableEntityInterceptor>());
+        });
 
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ApplicationDbContextInitializer>();
