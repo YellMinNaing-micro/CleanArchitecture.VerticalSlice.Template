@@ -1,11 +1,13 @@
-name: CI
+name: Clean Arch CI
 
 on:
   push:
     branches:
       - main
-      - master
+      
   pull_request:
+      branches: 
+      - main
 
 permissions:
   contents: read
