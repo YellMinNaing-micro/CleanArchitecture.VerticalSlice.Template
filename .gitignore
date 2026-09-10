@@ -2,6 +2,11 @@
 [Bb]in/
 [Oo]bj/
 [Oo]ut/
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+coverage.cobertura.xml
 
 ## Visual Studio cache / user files
 .vs/
