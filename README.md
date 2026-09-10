@@ -1,5 +1,7 @@
 # 🚀 Modern .NET Web API: Clean Architecture & Vertical Slice Template
 
+[![CI](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/ci.yml/badge.svg)](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/ci.yml)
+
 [မြန်မာဘာသာဖြင့် ဖတ်ရှုရန် (Read in Myanmar)](README.my.md)
 
 This repository contains an enterprise-ready, zero-configuration Web API template built using **ASP.NET Core (.NET 10)**. It is structured around the principles of **Clean Architecture** for clear layer boundaries, combined with **Vertical Slice Architecture (Feature Folders)** inside the core application layer to maintain high cohesion and ease of change.
