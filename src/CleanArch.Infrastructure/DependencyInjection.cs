@@ -12,7 +12,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection") 
+        var connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? "Data Source=CleanArch.db";
 
         services.AddScoped<AuditableEntityInterceptor>();
