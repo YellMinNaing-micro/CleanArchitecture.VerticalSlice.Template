@@ -1,5 +1,7 @@
 # 🚀 Modern .NET Web API: Clean Architecture & Vertical Slice Template (မြန်မာဘာသာ)
 
+[![CI](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/ci.yml/badge.svg)](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/ci.yml)
+
 [Read in English (အင်္ဂလိပ်ဘာသာဖြင့် ဖတ်ရှုရန်)](README.md)
 
 ဤ Repository သည် Enterprise-ready ဖြစ်ပြီး zero-configuration ဖြင့် မောင်းနှင်နိုင်သော **ASP.NET Core (.NET 10)** Web API Template ဖြစ်သည်။ ၎င်းသည် စနစ်တကျရှိသော layer boundary များ ရရှိစေရန် **Clean Architecture** အခြေခံစည်းမျဉ်းများဖြင့် ဖွဲ့စည်းထားပြီး၊ Core Application Layer အတွင်း၌ လုပ်ဆောင်ချက်များကို သန့်ရှင်းသပ်ရပ်စွာ ပြင်ဆင်နိုင်ရန် **Vertical Slice Architecture (Feature Folders)** တည်ဆောက်ပုံစနစ်ကို ပေါင်းစပ်အသုံးပြုထားသည်။
