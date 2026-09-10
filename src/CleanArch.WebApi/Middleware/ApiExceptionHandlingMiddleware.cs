@@ -46,7 +46,7 @@ public class ApiExceptionHandlingMiddleware
             problemDetails.Status = StatusCodes.Status400BadRequest;
             problemDetails.Title = "Validation failed";
             problemDetails.Detail = "One or more validation errors occurred.";
-            
+
             var errors = validationException.Errors
                 .GroupBy(e => e.PropertyName, e => e.ErrorMessage)
                 .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
