@@ -6,6 +6,8 @@
     <Project Path="src/CleanArch.WebApi/CleanArch.WebApi.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/CleanArch.ArchitectureTests/CleanArch.ArchitectureTests.csproj" />
+    <Project Path="tests/CleanArch.IntegrationTests/CleanArch.IntegrationTests.csproj" />
     <Project Path="tests/CleanArch.UnitTests/CleanArch.UnitTests.csproj" />
   </Folder>
 </Solution>
