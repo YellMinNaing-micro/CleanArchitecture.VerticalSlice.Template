@@ -97,6 +97,8 @@ CleanArch/
         ├── appsettings.json                    # Configuration (Connection strings, Logging)
         └── Program.cs                          # Application entry point & service wiring
 └── tests/
+    ├── CleanArch.ArchitectureTests/            # Layer dependency rules (NetArchTest)
+    ├── CleanArch.IntegrationTests/             # In-memory SQLite API tests (WebApplicationFactory)
     └── CleanArch.UnitTests/                    # Unit Tests (xUnit, FluentAssertions, NSubstitute)
         ├── Domain/                             # Domain entity unit tests
         ├── Application/                        # Command, query, validator, and pipeline behavior tests
@@ -249,12 +251,16 @@ You can inspect the JSON request payloads, invoke routes, and verify error outpu
 - **`DELETE /api/products/{id}`** - Delete a product from the database.
 - **`GET /health`** - Health check endpoint returning overall API and database connectivity status as JSON.
 
-### 3. Running Unit Tests
-Execute the automated test suite with .NET CLI:
+### 3. Running Automated Tests
+Run the unit, architecture, and integration test suites with .NET CLI:
 ```bash
-dotnet test
+dotnet test CleanArch.slnx
 ```
 Or run with test coverage reporting:
 ```bash
-dotnet test --collect:"XPlat Code Coverage"
+dotnet test CleanArch.slnx --collect:"XPlat Code Coverage"
 ```
+
+- **Unit tests** verify individual domain, application, infrastructure, and Web API components.
+- **Architecture tests** enforce the inward-only Clean Architecture layer dependencies.
+- **Integration tests** boot the real Web API with an isolated in-memory SQLite database and verify HTTP endpoints.
