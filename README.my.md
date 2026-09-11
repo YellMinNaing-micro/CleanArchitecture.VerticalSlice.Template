@@ -97,6 +97,8 @@ CleanArch/
         ├── appsettings.json                    # database connections နှင့် logs setup configurations
         └── Program.cs                          # project စတင်မောင်းနှင်ရာ ဝင်ပေါက် (Entry point)
 └── tests/
+    ├── CleanArch.ArchitectureTests/            # Layer dependency စည်းမျဉ်းများ (NetArchTest)
+    ├── CleanArch.IntegrationTests/             # In-memory SQLite API tests (WebApplicationFactory)
     └── CleanArch.UnitTests/                    # Unit Tests ပရောဂျက် (xUnit, FluentAssertions, NSubstitute)
         ├── Domain/                             # Domain entity စမ်းသပ်ချက်များ
         ├── Application/                        # Command, query, validator နှင့် pipeline behavior စမ်းသပ်ချက်များ
@@ -248,12 +250,16 @@ API စတင်ပွင့်လာပါက browser တွင် interactive 
 - **`DELETE /api/products/{id}`** - database ထဲမှ product ကို ဖျက်ပေးသည်။
 - **`GET /health`** - API status နှင့် Database ချိတ်ဆက်မှု အခြေအနေကို JSON format ဖြင့် စစ်ဆေးပေးသည်။
 
-### ၃။ Unit Tests များ စမ်းသပ် Run ရန်
-Automated test suite အားလုံးကို .NET CLI ဖြင့် အောက်ပါအတိုင်း run နိုင်သည်-
+### ၃။ Automated Tests များ စမ်းသပ် Run ရန်
+Unit၊ Architecture နှင့် Integration test suites အားလုံးကို .NET CLI ဖြင့် အောက်ပါအတိုင်း run နိုင်သည်-
 ```bash
-dotnet test
+dotnet test CleanArch.slnx
 ```
 သို့မဟုတ် code coverage အစီရင်ခံချက်နှင့်အတူ run ရန်-
 ```bash
-dotnet test --collect:"XPlat Code Coverage"
+dotnet test CleanArch.slnx --collect:"XPlat Code Coverage"
 ```
+
+- **Unit tests** သည် Domain၊ Application၊ Infrastructure နှင့် Web API component တစ်ခုချင်းစီကို စစ်ဆေးသည်။
+- **Architecture tests** သည် Clean Architecture layer dependencies များ အတွင်းဘက်သို့သာ မှီခိုကြောင်း စစ်ဆေးသည်။
+- **Integration tests** သည် Web API အစစ်ကို သီးခြား in-memory SQLite database ဖြင့် boot လုပ်ပြီး HTTP endpoints များကို စစ်ဆေးသည်။
