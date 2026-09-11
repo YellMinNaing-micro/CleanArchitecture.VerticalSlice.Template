@@ -69,3 +69,6 @@ app.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks
 });
 
 app.Run();
+
+// Exposes the entry point to WebApplicationFactory for integration tests.
+public partial class Program;
