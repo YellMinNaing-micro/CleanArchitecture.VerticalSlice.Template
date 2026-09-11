@@ -1,6 +1,8 @@
 # 🚀 Modern .NET Web API: Clean Architecture & Vertical Slice Template (မြန်မာဘာသာ)
 
 [![CI](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/ci.yml/badge.svg)](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/codeql.yml/badge.svg)](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/codeql.yml)
+[![codecov](https://codecov.io/gh/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/branch/main/graph/badge.svg)](https://codecov.io/gh/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template)
 
 [Read in English (အင်္ဂလိပ်ဘာသာဖြင့် ဖတ်ရှုရန်)](README.md)
 
@@ -57,9 +59,13 @@ CleanArch/
     │   ├── Features/
     │   │   └── Products/                       # Product features နှင့်ပတ်သက်သော vertical slices
     │   │       ├── Commands/
-    │   │       │   └── CreateProduct/
-    │   │       │       ├── CreateProductCommand.cs
-    │   │       │       └── CreateProductCommandValidator.cs
+    │   │       │   ├── CreateProduct/
+    │   │       │   │   ├── CreateProductCommand.cs
+    │   │       │   │   └── CreateProductCommandValidator.cs
+    │   │       │   ├── UpdateProduct/
+    │   │       │   │   └── UpdateProductCommand.cs
+    │   │       │   └── DeleteProduct/
+    │   │       │       └── DeleteProductCommand.cs
     │   │       └── Queries/
     │   │           ├── GetProductById/
     │   │           │   └── GetProductByIdQuery.cs
@@ -148,6 +154,15 @@ Client ဆီမှ ဝင်လာသော HTTP Request သည် Mediator Pat
 
 ---
 
+## ✅ အလိုအလျောက် အရည်အသွေးစစ်ဆေးမှုများ
+
+- **GitHub Actions CI:** `main` သို့ push သို့မဟုတ် pull request ပြုလုပ်တိုင်း dependencies restore၊ build၊ code formatting နှင့် tests အားလုံးကို စစ်ဆေးပေးသည်။
+- **Codecov:** Line နှင့် branch coverage ကို တင်ပေးပြီး test မရောက်သေးသောနေရာများနှင့် pull request တစ်ခုချင်းစီ၏ coverage အပြောင်းအလဲကို ကြည့်ရှုနိုင်စေသည်။
+- **CodeQL:** Push၊ pull request နှင့် အပတ်စဉ် schedule တို့တွင် C# source code ထဲရှိ security vulnerabilities များကို scan လုပ်ပေးသည်။
+- **Dependabot:** NuGet packages နှင့် GitHub Actions versions များကို အပတ်စဉ်စစ်ပြီး version အသစ်ရှိလျှင် update pull request တင်ပေးသည်။
+
+---
+
 ## 💡 လမ်းညွှန်ချက်များ
 
 ### ၁။ Feature အသစ်တစ်ခု ထပ်ထည့်ပုံ (ဥပမာ - `Order`)
@@ -205,6 +220,12 @@ Angular, React, Vue, သို့မဟုတ် Svelte client project တစ်
 ---
 
 ## 🚀 စတင်အသုံးပြုပုံ
+
+### လိုအပ်သော Software များ
+
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+- Git
+- Visual Studio 2026၊ Visual Studio Code သို့မဟုတ် JetBrains Rider (မဖြစ်မနေမလိုပါ)
 
 ### ၁။ API စတင် Run ရန်
 ပရောဂျက်၏ root လမ်းကြောင်းအောက်တွင် အောက်ပါအတိုင်း run ပါ-

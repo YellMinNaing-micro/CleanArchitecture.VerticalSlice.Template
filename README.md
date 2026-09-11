@@ -1,6 +1,8 @@
 # 🚀 Modern .NET Web API: Clean Architecture & Vertical Slice Template
 
 [![CI](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/ci.yml/badge.svg)](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/codeql.yml/badge.svg)](https://github.com/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/actions/workflows/codeql.yml)
+[![codecov](https://codecov.io/gh/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template/branch/main/graph/badge.svg)](https://codecov.io/gh/YellMinNaing-micro/CleanArchitecture.VerticalSlice.Template)
 
 [မြန်မာဘာသာဖြင့် ဖတ်ရှုရန် (Read in Myanmar)](README.my.md)
 
@@ -57,9 +59,13 @@ CleanArch/
     │   ├── Features/
     │   │   └── Products/                       # Product aggregate vertical slices
     │   │       ├── Commands/
-    │   │       │   └── CreateProduct/
-    │   │       │       ├── CreateProductCommand.cs
-    │   │       │       └── CreateProductCommandValidator.cs
+    │   │       │   ├── CreateProduct/
+    │   │       │   │   ├── CreateProductCommand.cs
+    │   │       │   │   └── CreateProductCommandValidator.cs
+    │   │       │   ├── UpdateProduct/
+    │   │       │   │   └── UpdateProductCommand.cs
+    │   │       │   └── DeleteProduct/
+    │   │       │       └── DeleteProductCommand.cs
     │   │       └── Queries/
     │   │           ├── GetProductById/
     │   │           │   └── GetProductByIdQuery.cs
@@ -148,6 +154,15 @@ When a client hits an API endpoint, the request flows through the clean boundari
 
 ---
 
+## ✅ Automated Quality Checks
+
+- **GitHub Actions CI:** Restores, builds, checks formatting, and runs all tests on every push and pull request to `main`.
+- **Codecov:** Publishes line and branch coverage so untested areas and coverage changes are visible for each pull request.
+- **CodeQL:** Scans the C# codebase for security vulnerabilities on pushes, pull requests, and a weekly schedule.
+- **Dependabot:** Checks NuGet packages and GitHub Actions weekly and opens update pull requests when newer versions are available.
+
+---
+
 ## 💡 How-To Guides
 
 ### 1. How to Add a New Feature (e.g., `Order`)
@@ -206,6 +221,12 @@ You can integrate an Angular, React, Vue, or Svelte client directly inside the s
 ---
 
 ## 🚀 Getting Started
+
+### Prerequisites
+
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+- Git
+- Visual Studio 2026, Visual Studio Code, or JetBrains Rider (optional)
 
 ### 1. Running the API
 From the root directory of the project, run:
