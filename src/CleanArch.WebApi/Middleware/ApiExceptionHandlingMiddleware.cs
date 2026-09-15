@@ -1,5 +1,6 @@
 using FluentValidation;
 using CleanArch.WebApi.Helpers;
+using CleanArch.WebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
@@ -38,13 +39,17 @@ public class ApiExceptionHandlingMiddleware
     {
         context.Response.ContentType = "application/json";
 
-        string message;
+        MessageResponse message;
         IReadOnlyDictionary<string, string[]>? errors = null;
 
         if (exception is ValidationException validationException)
         {
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            message = "One or more validation errors occurred.";
+            message = new MessageResponse
+            {
+                EN = "One or more validation errors occurred.",
+                MM = "အချက်အလက်တစ်ခု သို့မဟုတ် တစ်ခုထက်ပို၍ မှားယွင်းနေပါသည်။"
+            };
 
             errors = validationException.Errors
                 .GroupBy(e => e.PropertyName, e => e.ErrorMessage)
@@ -54,16 +59,24 @@ public class ApiExceptionHandlingMiddleware
         else if (exception is KeyNotFoundException keyNotFoundException)
         {
             context.Response.StatusCode = StatusCodes.Status404NotFound;
-            message = keyNotFoundException.Message;
+            message = new MessageResponse
+            {
+                EN = keyNotFoundException.Message,
+                MM = "တောင်းဆိုထားသော အချက်အလက်ကို ရှာမတွေ့ပါ။"
+            };
         }
         else
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            message = "An unexpected error occurred.";
+            message = new MessageResponse
+            {
+                EN = "An unexpected error occurred.",
+                MM = "မျှော်လင့်မထားသော ချို့ယွင်းချက်တစ်ခု ဖြစ်ပွားခဲ့ပါသည်။"
+            };
         }
 
         var json = JsonSerializer.Serialize(
-            ApiResponseHelper.Failure(message, errors),
+            ApiResponse.Error(message, errors),
             new JsonSerializerOptions(JsonSerializerDefaults.Web));
         await context.Response.WriteAsync(json);
     }
