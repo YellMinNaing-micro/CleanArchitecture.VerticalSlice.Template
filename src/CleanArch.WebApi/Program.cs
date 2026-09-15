@@ -40,6 +40,9 @@ if (app.Environment.IsDevelopment())
 // Global Custom Exception Handling Middleware
 app.UseMiddleware<ApiExceptionHandlingMiddleware>();
 
+// Only accept application/json for requests that contain a body.
+app.UseMiddleware<JsonContentTypeMiddleware>();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
