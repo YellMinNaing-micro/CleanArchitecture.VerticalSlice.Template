@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+using CleanArch.WebApi.Helpers;
 
 namespace CleanArch.WebApi.Middleware;
 
@@ -19,14 +19,8 @@ public sealed class JsonContentTypeMiddleware
             context.Response.StatusCode = StatusCodes.Status415UnsupportedMediaType;
             context.Response.ContentType = JsonContentType;
 
-            var problem = new ProblemDetails
-            {
-                Status = StatusCodes.Status415UnsupportedMediaType,
-                Title = "Unsupported Media Type",
-                Detail = "Request Content-Type must be application/json."
-            };
-
-            await context.Response.WriteAsJsonAsync(problem);
+            await context.Response.WriteAsJsonAsync(
+                ApiResponseHelper.Failure("Request Content-Type must be application/json."));
             return;
         }
 
