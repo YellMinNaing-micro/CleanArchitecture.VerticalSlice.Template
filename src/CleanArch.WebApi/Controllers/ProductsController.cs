@@ -3,6 +3,8 @@ using CleanArch.Application.Features.Products.Commands.UpdateProduct;
 using CleanArch.Application.Features.Products.Commands.DeleteProduct;
 using CleanArch.Application.Features.Products.Queries.GetProductById;
 using CleanArch.Application.Features.Products.Queries.GetProducts;
+using CleanArch.WebApi.Helpers;
+using CleanArch.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,32 +16,34 @@ public class ProductsController : ApiControllerBase
     [HttpPost]
     [EndpointSummary("Create a new product")]
     [EndpointDescription("Creates a new product in the database and returns its unique ID.")]
-    public async Task<ActionResult<int>> Create(CreateProductCommand command)
+    public async Task<ActionResult<ApiResponse<int>>> Create(CreateProductCommand command)
     {
-        return await Mediator.Send(command);
+        var productId = await Mediator.Send(command);
+        return Ok(ApiResponseHelper.Success(productId, "Product created successfully."));
     }
 
     [HttpGet]
     [EndpointSummary("Get all products")]
     [EndpointDescription("Retrieves a list of all products currently in the database.")]
-    public async Task<ActionResult<IReadOnlyList<ProductDto>>> GetAll()
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<ProductDto>>>> GetAll()
     {
-        return Ok(await Mediator.Send(new GetProductsQuery()));
+        var products = await Mediator.Send(new GetProductsQuery());
+        return Ok(ApiResponseHelper.Success(products, "Products retrieved successfully."));
     }
 
     [HttpGet("{id}")]
     [EndpointSummary("Get product details by ID")]
     [EndpointDescription("Retrieves details of a specific product using its unique ID.")]
-    public async Task<ActionResult<ProductDto>> GetById(int id)
+    public async Task<ActionResult<ApiResponse<ProductDto>>> GetById(int id)
     {
         ProductDto? product = await Mediator.Send(new GetProductByIdQuery(id));
 
         if (product == null)
         {
-            return NotFound();
+            return NotFound(ApiResponseHelper.Failure($"Product with ID {id} was not found."));
         }
 
-        return Ok(product);
+        return Ok(ApiResponseHelper.Success(product, "Product retrieved successfully."));
     }
 
     [HttpPut("{id}")]
@@ -49,12 +53,12 @@ public class ProductsController : ApiControllerBase
     {
         if (id != command.Id)
         {
-            return BadRequest("Product ID in path must match Product ID in request body.");
+            return BadRequest(ApiResponseHelper.Failure("Product ID in path must match Product ID in request body."));
         }
 
         await Mediator.Send(command);
 
-        return NoContent();
+        return Ok(ApiResponseHelper.Success("Product updated successfully."));
     }
 
     [HttpDelete("{id}")]
@@ -64,6 +68,6 @@ public class ProductsController : ApiControllerBase
     {
         await Mediator.Send(new DeleteProductCommand(id));
 
-        return NoContent();
+        return Ok(ApiResponseHelper.Success("Product deleted successfully."));
     }
 }
