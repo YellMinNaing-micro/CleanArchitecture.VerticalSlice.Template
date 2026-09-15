@@ -47,7 +47,9 @@ public class JsonContentTypeMiddlewareTests
 
         context.Response.Body.Position = 0;
         using var document = await JsonDocument.ParseAsync(context.Response.Body);
-        document.RootElement.GetProperty("status").GetInt32().Should().Be(415);
+        document.RootElement.GetProperty("success").GetBoolean().Should().BeFalse();
+        document.RootElement.GetProperty("message").GetString()
+            .Should().Be("Request Content-Type must be application/json.");
     }
 
     [Fact]
