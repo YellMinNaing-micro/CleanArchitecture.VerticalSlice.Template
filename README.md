@@ -222,6 +222,81 @@ You can integrate an Angular, React, Vue, or Svelte client directly inside the s
 
 ---
 
+## 📦 Standard API Response Format
+
+All controller responses use a consistent JSON envelope with bilingual English and Myanmar messages. Use the reusable `ApiResponse` helper instead of returning raw data with `Ok(...)`.
+
+### Success response with data
+
+```csharp
+return ApiResponse.OkResult(
+    route: null,
+    message: new MessageResponse
+    {
+        EN = "Products retrieved successfully.",
+        MM = "ကုန်ပစ္စည်းများ ရယူပြီးပါပြီ။"
+    },
+    data: products);
+```
+
+```json
+{
+  "success": true,
+  "message": {
+    "en": "Products retrieved successfully.",
+    "mm": "ကုန်ပစ္စည်းများ ရယူပြီးပါပြီ။"
+  },
+  "data": []
+}
+```
+
+Use `route` when the client should know the resource location. A null route is omitted from the JSON response.
+
+```csharp
+return ApiResponse.OkResult(
+    route: $"/api/products/{productId}",
+    message: new MessageResponse
+    {
+        EN = "Product created successfully.",
+        MM = "ကုန်ပစ္စည်းအသစ် ဖန်တီးပြီးပါပြီ။"
+    },
+    data: productId);
+```
+
+### Success response without data
+
+```csharp
+return ApiResponse.OkResult(
+    route: null,
+    message: new MessageResponse
+    {
+        EN = "Product updated successfully.",
+        MM = "ကုန်ပစ္စည်းအချက်အလက် ပြင်ဆင်ပြီးပါပြီ။"
+    });
+```
+
+### Error response
+
+```csharp
+return ApiResponse.ErrorResult(
+    StatusCodes.Status404NotFound,
+    new MessageResponse
+    {
+        EN = "Product was not found.",
+        MM = "ကုန်ပစ္စည်းကို ရှာမတွေ့ပါ။"
+    });
+```
+
+Validation failures may additionally contain an `errors` dictionary. Global exceptions, invalid model state, and unsupported content types use the same bilingual response envelope. API requests containing a body must use `Content-Type: application/json`; `application/json; charset=utf-8` is also accepted.
+
+Relevant types are located in:
+
+- `CleanArch.WebApi/Helpers/ApiResponse.cs`
+- `CleanArch.WebApi/Models/ApiResult.cs`
+- `CleanArch.WebApi/Models/MessageResponse.cs`
+
+---
+
 ## 🚀 Getting Started
 
 ### Prerequisites
