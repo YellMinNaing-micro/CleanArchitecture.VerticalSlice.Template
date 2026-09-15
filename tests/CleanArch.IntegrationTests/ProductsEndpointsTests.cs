@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using CleanArch.Application.Features.Products.Commands.CreateProduct;
 using CleanArch.Application.Features.Products.Queries.GetProducts;
+using CleanArch.WebApi.Models;
 using FluentAssertions;
 
 namespace CleanArch.IntegrationTests;
@@ -28,15 +29,20 @@ public class ProductsEndpointsTests : IClassFixture<CustomWebApplicationFactory>
 
         var createResponse = await _client.PostAsJsonAsync("/api/products", command);
 
-        createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        var productId = await createResponse.Content.ReadFromJsonAsync<int>();
-        productId.Should().BeGreaterThan(0);
+        createResponse.StatusCode.Should().Be(HttpStatusCode.OK,
+            await createResponse.Content.ReadAsStringAsync());
+        var createResult = await createResponse.Content.ReadFromJsonAsync<ApiResponse<int>>();
+        createResult.Should().NotBeNull();
+        createResult!.Success.Should().BeTrue();
+        createResult.Data.Should().BeGreaterThan(0);
 
-        var product = await _client.GetFromJsonAsync<ProductDto>($"/api/products/{productId}");
-        product.Should().NotBeNull();
-        product!.Name.Should().Be(command.Name);
-        product.Price.Should().Be(command.Price);
-        product.Sku.Should().Be(command.Sku);
+        var getResult = await _client.GetFromJsonAsync<ApiResponse<ProductDto>>(
+            $"/api/products/{createResult.Data}");
+        getResult.Should().NotBeNull();
+        getResult!.Data.Should().NotBeNull();
+        getResult.Data!.Name.Should().Be(command.Name);
+        getResult.Data.Price.Should().Be(command.Price);
+        getResult.Data.Sku.Should().Be(command.Sku);
     }
 
     [Fact]
