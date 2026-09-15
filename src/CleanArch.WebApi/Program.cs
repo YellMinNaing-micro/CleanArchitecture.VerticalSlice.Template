@@ -3,6 +3,7 @@ using CleanArch.Application.Common.Interfaces;
 using CleanArch.Infrastructure;
 using CleanArch.WebApi.Middleware;
 using CleanArch.WebApi.Helpers;
+using CleanArch.WebApi.Models;
 using CleanArch.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Scalar.AspNetCore;
@@ -24,7 +25,13 @@ builder.Services.AddControllers()
                         .ToArray());
 
             return new BadRequestObjectResult(
-                ApiResponseHelper.Failure("One or more validation errors occurred.", errors));
+                ApiResponse.Error(
+                    new MessageResponse
+                    {
+                        EN = "One or more validation errors occurred.",
+                        MM = "အချက်အလက်တစ်ခု သို့မဟုတ် တစ်ခုထက်ပို၍ မှားယွင်းနေပါသည်။"
+                    },
+                    errors));
         };
     });
 builder.Services.AddHttpContextAccessor();
