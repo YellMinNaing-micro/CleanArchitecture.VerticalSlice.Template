@@ -31,12 +31,12 @@ public class ProductsEndpointsTests : IClassFixture<CustomWebApplicationFactory>
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK,
             await createResponse.Content.ReadAsStringAsync());
-        var createResult = await createResponse.Content.ReadFromJsonAsync<ApiResponse<int>>();
+        var createResult = await createResponse.Content.ReadFromJsonAsync<ApiResult<int>>();
         createResult.Should().NotBeNull();
         createResult!.Success.Should().BeTrue();
         createResult.Data.Should().BeGreaterThan(0);
 
-        var getResult = await _client.GetFromJsonAsync<ApiResponse<ProductDto>>(
+        var getResult = await _client.GetFromJsonAsync<ApiResult<ProductDto>>(
             $"/api/products/{createResult.Data}");
         getResult.Should().NotBeNull();
         getResult!.Data.Should().NotBeNull();
