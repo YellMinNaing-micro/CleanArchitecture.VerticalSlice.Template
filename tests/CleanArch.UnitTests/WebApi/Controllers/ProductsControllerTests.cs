@@ -55,7 +55,7 @@ public class ProductsControllerTests
 
         // Assert
         var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-        var response = okResult.Value.Should().BeOfType<ApiResponse<int>>().Subject;
+        var response = okResult.Value.Should().BeOfType<ApiResult<int>>().Subject;
         response.Success.Should().BeTrue();
         response.Data.Should().Be(123);
         await _mediator.Received(1).Send(command, Arg.Any<CancellationToken>());
@@ -78,7 +78,7 @@ public class ProductsControllerTests
 
         // Assert
         var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-        var response = okResult.Value.Should().BeOfType<ApiResponse<IReadOnlyList<ProductDto>>>().Subject;
+        var response = okResult.Value.Should().BeOfType<ApiResult<IReadOnlyList<ProductDto>>>().Subject;
         var returnedProducts = response.Data!;
         returnedProducts.Should().HaveCount(1);
         returnedProducts[0].Name.Should().Be("Laptop");
@@ -97,7 +97,7 @@ public class ProductsControllerTests
 
         // Assert
         var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-        var response = okResult.Value.Should().BeOfType<ApiResponse<ProductDto>>().Subject;
+        var response = okResult.Value.Should().BeOfType<ApiResult<ProductDto>>().Subject;
         response.Data.Should().BeEquivalentTo(product);
     }
 
@@ -113,7 +113,7 @@ public class ProductsControllerTests
 
         // Assert
         var notFound = result.Result.Should().BeOfType<NotFoundObjectResult>().Subject;
-        notFound.Value.Should().BeOfType<ApiResponse>().Which.Success.Should().BeFalse();
+        notFound.Value.Should().BeOfType<ApiResult>().Which.Success.Should().BeFalse();
     }
 
     [Fact]
@@ -127,9 +127,9 @@ public class ProductsControllerTests
 
         // Assert
         var badRequestResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
-        var response = badRequestResult.Value.Should().BeOfType<ApiResponse>().Subject;
+        var response = badRequestResult.Value.Should().BeOfType<ApiResult>().Subject;
         response.Success.Should().BeFalse();
-        response.Message.Should().Be("Product ID in path must match Product ID in request body.");
+        response.Message.EN.Should().Be("Product ID in path must match Product ID in request body.");
         await _mediator.DidNotReceive().Send(Arg.Any<UpdateProductCommand>(), Arg.Any<CancellationToken>());
     }
 
@@ -144,7 +144,7 @@ public class ProductsControllerTests
 
         // Assert
         var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-        okResult.Value.Should().BeOfType<ApiResponse>().Which.Success.Should().BeTrue();
+        okResult.Value.Should().BeOfType<ApiResult>().Which.Success.Should().BeTrue();
         await _mediator.Received(1).Send(command, Arg.Any<CancellationToken>());
     }
 
@@ -156,7 +156,7 @@ public class ProductsControllerTests
 
         // Assert
         var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-        okResult.Value.Should().BeOfType<ApiResponse>().Which.Success.Should().BeTrue();
+        okResult.Value.Should().BeOfType<ApiResult>().Which.Success.Should().BeTrue();
         await _mediator.Received(1).Send(Arg.Is<DeleteProductCommand>(c => c.Id == 10), Arg.Any<CancellationToken>());
     }
 }
