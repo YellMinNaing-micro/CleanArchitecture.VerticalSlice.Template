@@ -61,7 +61,7 @@ public class ApiExceptionHandlingMiddlewareTests
 
         context.Response.Body.Seek(0, SeekOrigin.Begin);
         var responseBody = await new StreamReader(context.Response.Body).ReadToEndAsync();
-        var response = JsonSerializer.Deserialize<ApiResponse<object?>>(responseBody, JsonOptions);
+        var response = JsonSerializer.Deserialize<ApiResponse>(responseBody, JsonOptions);
 
         response.Should().NotBeNull();
         response!.Success.Should().BeFalse();
@@ -89,7 +89,7 @@ public class ApiExceptionHandlingMiddlewareTests
 
         context.Response.Body.Seek(0, SeekOrigin.Begin);
         var responseBody = await new StreamReader(context.Response.Body).ReadToEndAsync();
-        var response = JsonSerializer.Deserialize<ApiResponse<object?>>(responseBody, JsonOptions);
+        var response = JsonSerializer.Deserialize<ApiResponse>(responseBody, JsonOptions);
 
         response.Should().NotBeNull();
         response!.Success.Should().BeFalse();
@@ -116,7 +116,7 @@ public class ApiExceptionHandlingMiddlewareTests
 
         context.Response.Body.Seek(0, SeekOrigin.Begin);
         var responseBody = await new StreamReader(context.Response.Body).ReadToEndAsync();
-        var response = JsonSerializer.Deserialize<ApiResponse<object?>>(responseBody, JsonOptions);
+        var response = JsonSerializer.Deserialize<ApiResponse>(responseBody, JsonOptions);
 
         response.Should().NotBeNull();
         response!.Success.Should().BeFalse();
