@@ -7,11 +7,11 @@ public static class ApiResponseHelper
     public static ApiResponse<T> Success<T>(T data, string message = "Request completed successfully.") =>
         new(true, message, data);
 
-    public static ApiResponse<object?> Success(string message = "Request completed successfully.") =>
+    public static ApiResponse Success(string message = "Request completed successfully.") =>
         new(true, message);
 
-    public static ApiResponse<object?> Failure(
+    public static ApiResponse Failure(
         string message,
         IReadOnlyDictionary<string, string[]>? errors = null) =>
-        new(false, message, Errors: errors);
+        new(false, message, errors);
 }
