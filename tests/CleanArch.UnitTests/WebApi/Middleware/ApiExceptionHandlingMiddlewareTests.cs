@@ -61,11 +61,11 @@ public class ApiExceptionHandlingMiddlewareTests
 
         context.Response.Body.Seek(0, SeekOrigin.Begin);
         var responseBody = await new StreamReader(context.Response.Body).ReadToEndAsync();
-        var response = JsonSerializer.Deserialize<ApiResponse>(responseBody, JsonOptions);
+        var response = JsonSerializer.Deserialize<ApiResult>(responseBody, JsonOptions);
 
         response.Should().NotBeNull();
         response!.Success.Should().BeFalse();
-        response.Message.Should().Be("One or more validation errors occurred.");
+        response.Message.EN.Should().Be("One or more validation errors occurred.");
         response.Errors.Should().ContainKey("Name");
     }
 
@@ -89,11 +89,11 @@ public class ApiExceptionHandlingMiddlewareTests
 
         context.Response.Body.Seek(0, SeekOrigin.Begin);
         var responseBody = await new StreamReader(context.Response.Body).ReadToEndAsync();
-        var response = JsonSerializer.Deserialize<ApiResponse>(responseBody, JsonOptions);
+        var response = JsonSerializer.Deserialize<ApiResult>(responseBody, JsonOptions);
 
         response.Should().NotBeNull();
         response!.Success.Should().BeFalse();
-        response.Message.Should().Be("Product with ID 42 was not found.");
+        response.Message.EN.Should().Be("Product with ID 42 was not found.");
     }
 
     [Fact]
@@ -116,10 +116,10 @@ public class ApiExceptionHandlingMiddlewareTests
 
         context.Response.Body.Seek(0, SeekOrigin.Begin);
         var responseBody = await new StreamReader(context.Response.Body).ReadToEndAsync();
-        var response = JsonSerializer.Deserialize<ApiResponse>(responseBody, JsonOptions);
+        var response = JsonSerializer.Deserialize<ApiResult>(responseBody, JsonOptions);
 
         response.Should().NotBeNull();
         response!.Success.Should().BeFalse();
-        response.Message.Should().Be("An unexpected error occurred.");
+        response.Message.EN.Should().Be("An unexpected error occurred.");
     }
 }
