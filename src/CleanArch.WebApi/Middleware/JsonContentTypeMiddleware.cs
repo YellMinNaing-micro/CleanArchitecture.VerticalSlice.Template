@@ -1,4 +1,5 @@
 using CleanArch.WebApi.Helpers;
+using CleanArch.WebApi.Models;
 
 namespace CleanArch.WebApi.Middleware;
 
@@ -20,7 +21,11 @@ public sealed class JsonContentTypeMiddleware
             context.Response.ContentType = JsonContentType;
 
             await context.Response.WriteAsJsonAsync(
-                ApiResponseHelper.Failure("Request Content-Type must be application/json."));
+                ApiResponse.Error(new MessageResponse
+                {
+                    EN = "Request Content-Type must be application/json.",
+                    MM = "Request Content-Type သည် application/json ဖြစ်ရပါမည်။"
+                }));
             return;
         }
 
