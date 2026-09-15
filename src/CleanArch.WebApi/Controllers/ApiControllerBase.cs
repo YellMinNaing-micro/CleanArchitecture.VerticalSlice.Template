@@ -5,6 +5,8 @@ namespace CleanArch.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Consumes("application/json")]
+[Produces("application/json")]
 public abstract class ApiControllerBase : ControllerBase
 {
     private ISender? _mediator;

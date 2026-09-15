@@ -4,6 +4,7 @@ using CleanArch.Application.Features.Products.Commands.UpdateProduct;
 using CleanArch.Application.Features.Products.Queries.GetProductById;
 using CleanArch.Application.Features.Products.Queries.GetProducts;
 using CleanArch.WebApi.Controllers;
+using CleanArch.WebApi.Models;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -53,7 +54,10 @@ public class ProductsControllerTests
         var result = await _controller.Create(command);
 
         // Assert
-        result.Value.Should().Be(123);
+        var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
+        var response = okResult.Value.Should().BeOfType<ApiResult<int>>().Subject;
+        response.Success.Should().BeTrue();
+        response.Data.Should().Be(123);
         await _mediator.Received(1).Send(command, Arg.Any<CancellationToken>());
     }
 
@@ -74,7 +78,8 @@ public class ProductsControllerTests
 
         // Assert
         var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-        var returnedProducts = okResult.Value.Should().BeAssignableTo<IReadOnlyList<ProductDto>>().Subject;
+        var response = okResult.Value.Should().BeOfType<ApiResult<IReadOnlyList<ProductDto>>>().Subject;
+        var returnedProducts = response.Data!;
         returnedProducts.Should().HaveCount(1);
         returnedProducts[0].Name.Should().Be("Laptop");
     }
@@ -92,7 +97,8 @@ public class ProductsControllerTests
 
         // Assert
         var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-        okResult.Value.Should().BeEquivalentTo(product);
+        var response = okResult.Value.Should().BeOfType<ApiResult<ProductDto>>().Subject;
+        response.Data.Should().BeEquivalentTo(product);
     }
 
     [Fact]
@@ -106,7 +112,8 @@ public class ProductsControllerTests
         var result = await _controller.GetById(99);
 
         // Assert
-        result.Result.Should().BeOfType<NotFoundResult>();
+        var notFound = result.Result.Should().BeOfType<NotFoundObjectResult>().Subject;
+        notFound.Value.Should().BeOfType<ApiResult>().Which.Success.Should().BeFalse();
     }
 
     [Fact]
@@ -120,12 +127,14 @@ public class ProductsControllerTests
 
         // Assert
         var badRequestResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
-        badRequestResult.Value.Should().Be("Product ID in path must match Product ID in request body.");
+        var response = badRequestResult.Value.Should().BeOfType<ApiResult>().Subject;
+        response.Success.Should().BeFalse();
+        response.Message.EN.Should().Be("Product ID in path must match Product ID in request body.");
         await _mediator.DidNotReceive().Send(Arg.Any<UpdateProductCommand>(), Arg.Any<CancellationToken>());
     }
 
     [Fact]
-    public async Task Update_WhenIdMatchesCommandId_ShouldSendUpdateCommand_AndReturnNoContent()
+    public async Task Update_WhenIdMatchesCommandId_ShouldSendUpdateCommand_AndReturnSuccessResponse()
     {
         // Arrange
         var command = new UpdateProductCommand { Id = 1, Name = "Tablet Pro", Price = 599m };
@@ -134,18 +143,20 @@ public class ProductsControllerTests
         var result = await _controller.Update(1, command);
 
         // Assert
-        result.Should().BeOfType<NoContentResult>();
+        var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+        okResult.Value.Should().BeOfType<ApiResult>().Which.Success.Should().BeTrue();
         await _mediator.Received(1).Send(command, Arg.Any<CancellationToken>());
     }
 
     [Fact]
-    public async Task Delete_ShouldSendDeleteProductCommand_AndReturnNoContent()
+    public async Task Delete_ShouldSendDeleteProductCommand_AndReturnSuccessResponse()
     {
         // Arrange & Act
         var result = await _controller.Delete(10);
 
         // Assert
-        result.Should().BeOfType<NoContentResult>();
+        var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+        okResult.Value.Should().BeOfType<ApiResult>().Which.Success.Should().BeTrue();
         await _mediator.Received(1).Send(Arg.Is<DeleteProductCommand>(c => c.Id == 10), Arg.Any<CancellationToken>());
     }
 }

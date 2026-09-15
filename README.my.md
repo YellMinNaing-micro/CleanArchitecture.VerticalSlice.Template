@@ -221,6 +221,81 @@ Angular, React, Vue, သို့မဟုတ် Svelte client project တစ်
 
 ---
 
+## 📦 စံသတ်မှတ်ထားသော API Response Format
+
+Controller response အားလုံးကို English နှင့် Myanmar message ပါဝင်သော JSON envelope ပုံစံတစ်မျိုးတည်းဖြင့် ပြန်ပေးထားသည်။ Raw data ကို `Ok(...)` ဖြင့် တိုက်ရိုက်ပြန်မည့်အစား reusable `ApiResponse` helper ကို အသုံးပြုပါ။
+
+### Data ပါသော success response
+
+```csharp
+return ApiResponse.OkResult(
+    route: null,
+    message: new MessageResponse
+    {
+        EN = "Products retrieved successfully.",
+        MM = "ကုန်ပစ္စည်းများ ရယူပြီးပါပြီ။"
+    },
+    data: products);
+```
+
+```json
+{
+  "success": true,
+  "message": {
+    "en": "Products retrieved successfully.",
+    "mm": "ကုန်ပစ္စည်းများ ရယူပြီးပါပြီ။"
+  },
+  "data": []
+}
+```
+
+Client ကို resource location ပြန်ပေးရန်လိုပါက `route` ထည့်နိုင်သည်။ `route` သည် null ဖြစ်ပါက JSON response ထဲတွင် မပါဝင်ပါ။
+
+```csharp
+return ApiResponse.OkResult(
+    route: $"/api/products/{productId}",
+    message: new MessageResponse
+    {
+        EN = "Product created successfully.",
+        MM = "ကုန်ပစ္စည်းအသစ် ဖန်တီးပြီးပါပြီ။"
+    },
+    data: productId);
+```
+
+### Data မပါသော success response
+
+```csharp
+return ApiResponse.OkResult(
+    route: null,
+    message: new MessageResponse
+    {
+        EN = "Product updated successfully.",
+        MM = "ကုန်ပစ္စည်းအချက်အလက် ပြင်ဆင်ပြီးပါပြီ။"
+    });
+```
+
+### Error response
+
+```csharp
+return ApiResponse.ErrorResult(
+    StatusCodes.Status404NotFound,
+    new MessageResponse
+    {
+        EN = "Product was not found.",
+        MM = "ကုန်ပစ္စည်းကို ရှာမတွေ့ပါ။"
+    });
+```
+
+Validation မှားယွင်းပါက `errors` dictionary ထပ်မံပါဝင်နိုင်သည်။ Global exception၊ invalid model state နှင့် unsupported content type response များသည်လည်း bilingual response envelope ပုံစံတူကို အသုံးပြုသည်။ Body ပါသော API request များတွင် `Content-Type: application/json` သတ်မှတ်ရမည်။ `application/json; charset=utf-8` ကိုလည်း လက်ခံသည်။
+
+သက်ဆိုင်ရာ types များ၏တည်နေရာများမှာ—
+
+- `CleanArch.WebApi/Helpers/ApiResponse.cs`
+- `CleanArch.WebApi/Models/ApiResult.cs`
+- `CleanArch.WebApi/Models/MessageResponse.cs`
+
+---
+
 ## 🚀 စတင်အသုံးပြုပုံ
 
 ### လိုအပ်သော Software များ
