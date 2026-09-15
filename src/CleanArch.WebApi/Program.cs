@@ -2,13 +2,31 @@ using CleanArch.Application;
 using CleanArch.Application.Common.Interfaces;
 using CleanArch.Infrastructure;
 using CleanArch.WebApi.Middleware;
+using CleanArch.WebApi.Helpers;
 using CleanArch.WebApi.Services;
+using Microsoft.AspNetCore.Mvc;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.InvalidModelStateResponseFactory = context =>
+        {
+            var errors = context.ModelState
+                .Where(entry => entry.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    entry => entry.Key,
+                    entry => entry.Value!.Errors
+                        .Select(error => error.ErrorMessage)
+                        .ToArray());
+
+            return new BadRequestObjectResult(
+                ApiResponseHelper.Failure("One or more validation errors occurred.", errors));
+        };
+    });
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUser, CurrentUser>();
 
