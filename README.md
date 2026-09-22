@@ -24,10 +24,11 @@ graph TD
     Infrastructure --> Application
     Application --> Domain[CleanArch.Domain<br>Enterprise Domain Layer]
 
-    style Domain fill:#f9f,stroke:#333,stroke-width:2px
-    style Application fill:#bbf,stroke:#333,stroke-width:2px
-    style Infrastructure fill:#fbb,stroke:#333,stroke-width:2px
-    style WebApi fill:#bfb,stroke:#333,stroke-width:2px
+    style Domain fill:#ff99ff,color:#111827,stroke:#6b7280,stroke-width:2px
+    style Application fill:#bbbbff,color:#111827,stroke:#6b7280,stroke-width:2px
+    style Infrastructure fill:#ffbbbb,color:#111827,stroke:#6b7280,stroke-width:2px
+    style WebApi fill:#bbffbb,color:#111827,stroke:#6b7280,stroke-width:2px
+    linkStyle default stroke:#6b7280,stroke-width:1.5px
 ```
 
 ---
