@@ -56,10 +56,9 @@ jobs:
         with:
           files: TestResults/**/coverage.cobertura.xml
           flags: unit-tests
-          fail_ci_if_error: true
+          fail_ci_if_error: false
           use_oidc: true
           use_pypi: true
-          use_legacy_upload_endpoint: true
           disable_search: true
           verbose: true
 
